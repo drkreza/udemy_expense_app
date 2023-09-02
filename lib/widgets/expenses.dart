@@ -26,9 +26,16 @@ class Expenses extends StatefulWidget {
 class _ExpensesState extends State<Expenses> {
   void _openAddExpenseOverlay() {
     showModalBottomSheet(
+      isScrollControlled: true,
       context: context,
-      builder: (ctx) => NewExpense(),
+      builder: (ctx) =>  NewExpense(onExpenseAdd: _addExpense),
     );
+  }
+
+  void _addExpense(Expense expense) {
+    setState(() {
+      widget._expensesList.add(expense);
+    });
   }
 
   @override
@@ -42,7 +49,10 @@ class _ExpensesState extends State<Expenses> {
         actions: [
           IconButton(
             onPressed: _openAddExpenseOverlay,
-            icon: const Icon(Icons.add,color: Colors.white,),
+            icon: const Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
           ),
         ],
         backgroundColor: Colors.blue,
